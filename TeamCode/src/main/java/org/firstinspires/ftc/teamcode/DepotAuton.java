@@ -31,21 +31,21 @@ public class DepotAuton extends Team7593Opmode {
 
         ArrayList<AutonStep> steps = new ArrayList<>();
         steps.add(new Hang(currEncoderVal, 4540));
-        steps.add(new DriveY(.5, -.4));
-        steps.add(new DriveX(.5, .4));
+        steps.add(new DriveY(.25, -.4));
+        steps.add(new DriveX(.25, .4));
         steps.add(new DriveY(.5, .4)); //get off the hook
         steps.add(new AngleRotate(92, -.45)); //angle yourself so the camera sees the minerals
         steps.add(new DriveY(.35, -.4)); //drive back
         steps.add(new GoldDetection()); //detect duh
-        steps.add(new DriveY(.7, .6)); //drive forward to see
+        steps.add(new DriveY(.58, .6)); //drive forward to see
         steps.add(new GoldStrafe()); //strafe to the side to go to the gold
         //steps.add(new GoldAngle());
-        steps.add(new DriveY(1, .85)); //drive forward and knock the right mineral off
+        steps.add(new DriveY(1.15, .85)); //drive forward and knock the right mineral off
         steps.add(new AngleRotate(135, -.4)); //rotate to line up with the wall
-        steps.add(new DriveX(1, -.9)); //strafe to reach wall
+        steps.add(new DriveX(1.7, -.9)); //strafe to reach wall
         //steps.add(new DepotAngle());
         steps.add(new StrafeOrNotToStrafe()); //strafe if you need to b
-        steps.add(new DriveY(2, -1)); //drive to the crater
+        steps.add(new DriveY(2.2, -1)); //drive to the crater
 
         return steps;
     }

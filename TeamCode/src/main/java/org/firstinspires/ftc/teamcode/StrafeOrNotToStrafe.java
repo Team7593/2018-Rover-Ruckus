@@ -13,9 +13,9 @@ public class StrafeOrNotToStrafe extends DriveX {
         goldMineral = opmode.getSharedInfo("Gold");
 
         if((Integer)goldMineral == 1){
-            this.endTime = .95;
+            this.endTime = 1.45;
         }else if((Integer)goldMineral == 2){
-            this.endTime = .55;
+            this.endTime = .7;
         }
 
         super.start(opmode);
