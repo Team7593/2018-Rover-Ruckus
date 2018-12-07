@@ -38,10 +38,11 @@ public class Team7593Hardware {
     public DcMotor motorRearRight;
     public DcMotor motorRearLeft;
     public DcMotor tiltMotor;
-    //public DcMotor spinMotor;
+    public DcMotor spinMotor;
+    public DcMotor extension;
 
     //declare servos
-    public Servo extension;
+
 
     //declare sensors
 
@@ -85,10 +86,11 @@ public class Team7593Hardware {
         motorRearLeft = hwMap.get(DcMotor.class, "mrl");
         hangMotor = hwMap.get(DcMotor.class,"hang");
         tiltMotor = hwMap.get(DcMotor.class, "tilt");
-        //spinMotor = hwMap.get(DcMotor.class, "spin");
+        spinMotor = hwMap.get(DcMotor.class, "spin");
+        extension = hwMap.get(DcMotor.class, "ext");
 
         //Define and initialize servos
-        //extension = hwMap.servo.get("ext");
+
 
         //Define and initialize sensors
 
@@ -104,7 +106,8 @@ public class Team7593Hardware {
         motorRearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorRearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         hangMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //tiltMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        tiltMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        extension.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 

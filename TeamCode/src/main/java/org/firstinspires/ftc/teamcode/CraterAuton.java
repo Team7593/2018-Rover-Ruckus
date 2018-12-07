@@ -5,12 +5,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import java.util.ArrayList;
 
-@Autonomous (name = "depot our crater")
-public class DepotAuton extends Team7593Opmode {
+@Autonomous (name = "crater w/o marker")
+public class CraterAuton extends Team7593Opmode {
 
     int currEncoderVal;
 
-    @Override
     public void init() {
         super.init();
 
@@ -26,7 +25,6 @@ public class DepotAuton extends Team7593Opmode {
         currEncoderVal = robot.hangMotor.getCurrentPosition();
     }
 
-    @Override
     public ArrayList<AutonStep> createAutonSteps() {
 
         ArrayList<AutonStep> steps = new ArrayList<>();
@@ -34,19 +32,12 @@ public class DepotAuton extends Team7593Opmode {
         steps.add(new DriveY(.25, -.4));
         steps.add(new DriveX(.25, .4));
         steps.add(new DriveY(.5, .4)); //get off the hook
-        steps.add(new AngleRotate(92, -.45)); //angle yourself so the camera sees the minerals
+        steps.add(new AngleRotate(90, -.45)); //angle yourself so the camera sees the minerals
         steps.add(new DriveY(.35, -.4)); //drive back
         steps.add(new GoldDetection()); //detect duh
         steps.add(new DriveY(.58, .6)); //drive forward to see
         steps.add(new GoldStrafe()); //strafe to the side to go to the gold
-        steps.add(new DriveY(1.15, .85)); //drive forward and knock the right mineral off
-        steps.add(new AngleRotate(135, -.4)); //rotate to line up with the wall
-        steps.add(new DriveX(1.7, -.9)); //strafe to reach wall
-        steps.add(new StrafeOrNotToStrafe()); //strafe if you need to
-        steps.add(new DriveToDepot());
-        steps.add(new DropMarker());
-        steps.add(new DriveY(2.2, -1)); //drive to the crater
-
+        steps.add(new DriveY(1, .75)); //drive forward and knock the right mineral off
         return steps;
     }
 }
