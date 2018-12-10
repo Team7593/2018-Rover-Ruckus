@@ -13,7 +13,7 @@ public class GoldStrafe extends DriveX {
         goldMineral = opmode.getSharedInfo("Gold");
 
         if((Integer)goldMineral == 1){
-            this.endTime = 1.2;
+            this.endTime = 1.0;
             this.speed = .9;
         }else if((Integer)goldMineral == 3){
             this.endTime = 1.0;

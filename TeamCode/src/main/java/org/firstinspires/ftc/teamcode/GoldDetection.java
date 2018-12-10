@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
@@ -13,6 +15,8 @@ public class GoldDetection implements AutonStep {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
+
+    public ElapsedTime time = new ElapsedTime();
 
     //key
     private static final String VUFORIA_KEY = "AQQ2oEX/////AAABmRhglvRgY03kixkUDOfRK4OB/Wl2Cq/lViWatt49JItTvIef39HtYxno77KU7POLMXgLnNBHqczE+7f77oej6SgdZFcejqj2O532qs80h1orf0qXXUMfiw/ZGLPozBnCec3h2v44KkGZwzekYjBlQQsedUiOdP0CgFpkR5Bxc7TiTCwCI94tKl4QgXTQZ84TWpT3lypUBBskpFbXgc4glmDnwejJ9CcKd7R/lWAhJcw/4u2ypuRoh+ngU//1xjkXJ02IPbh8YmkWy8LyhbWPVAwTT/+hz0+DH546x4m+TLc1N9AaEvYRgnYqpbfH8HhILRc3lNixb/8EKYFZ6dB2bLa74MUonpoy092zths61eRb";
@@ -59,6 +63,9 @@ public class GoldDetection implements AutonStep {
         if (tfod != null) {
             tfod.activate();
         }
+
+        time.startTime();
+        time.reset();
     }
 
     @Override
@@ -110,6 +117,7 @@ public class GoldDetection implements AutonStep {
 
     @Override
     public boolean isDone(Team7593Opmode opmode) {
+
         if(goldMineral != -1){
 
             if (tfod != null) {
@@ -120,9 +128,13 @@ public class GoldDetection implements AutonStep {
         }else if(tfod == null){
             opmode.shareInfo("Gold", 2);
             return true;
+        }else if(time.time() > 7){
+            goldMineral = 2;
+            return true;
         }else {
             return false;
         }
+
     }
 
     @Override

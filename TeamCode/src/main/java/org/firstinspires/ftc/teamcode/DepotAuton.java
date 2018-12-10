@@ -30,7 +30,7 @@ public class DepotAuton extends Team7593Opmode {
     public ArrayList<AutonStep> createAutonSteps() {
 
         ArrayList<AutonStep> steps = new ArrayList<>();
-        steps.add(new Hang(currEncoderVal, 4540)); //real robot 4540
+        steps.add(new Hang(currEncoderVal, -4540)); //real robot 4540
         steps.add(new DriveY(.25, -.4));
         steps.add(new DriveX(.25, .4));
         steps.add(new DriveY(.5, .4)); //get off the hook
@@ -40,11 +40,14 @@ public class DepotAuton extends Team7593Opmode {
         steps.add(new DriveY(.58, .6)); //drive forward to see
         steps.add(new GoldStrafe()); //strafe to the side to go to the gold
         steps.add(new DriveY(1.15, .85)); //drive forward and knock the right mineral off
+        steps.add(new DriveY(.15, .8)); //drive forward a bit more to make sure it's really off
+        steps.add(new DriveY(.15, -.8));//drive backward; makes sure we are clear when we turn
         steps.add(new AngleRotate(135, -.4)); //rotate to line up with the wall
         steps.add(new DriveX(1.7, -.9)); //strafe to reach wall
         steps.add(new StrafeOrNotToStrafe()); //strafe if you need to
         steps.add(new DriveToDepot());
         steps.add(new DropMarker());
+        steps.add(new DriveY(8, 0)); //delay
         steps.add(new DriveY(2.2, -1)); //drive to the crater
 
         return steps;

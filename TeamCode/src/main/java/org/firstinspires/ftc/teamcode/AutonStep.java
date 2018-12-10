@@ -19,3 +19,4 @@ public interface AutonStep {
     public void updateTelemetry(Team7593Opmode opmode); //method that will update the telemetry
 
 }
+

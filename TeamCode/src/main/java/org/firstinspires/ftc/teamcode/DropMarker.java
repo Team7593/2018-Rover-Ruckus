@@ -25,7 +25,7 @@ public class DropMarker implements AutonStep {
 
     @Override
     public boolean isDone(Team7593Opmode opmode) {
-        if(time.time() > 3){
+        if(time.time() > 1.3){
             opmode.robot.spinMotor.setPower(0);
             return true;
         }else{

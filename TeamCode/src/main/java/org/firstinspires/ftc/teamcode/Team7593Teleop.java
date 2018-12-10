@@ -136,9 +136,9 @@ public class Team7593Teleop extends Team7593Opmode {
 
         //code to spin the small motor
         if(spinOut){
-            robot.spinMotor.setPower(.7);
-        }else if(spinIn){
             robot.spinMotor.setPower(-.7);
+        }else if(spinIn){
+            robot.spinMotor.setPower(.7);
         }else{
             robot.spinMotor.setPower(0.0);
         }

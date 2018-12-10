@@ -28,7 +28,7 @@ public class CraterAuton extends Team7593Opmode {
     public ArrayList<AutonStep> createAutonSteps() {
 
         ArrayList<AutonStep> steps = new ArrayList<>();
-        steps.add(new Hang(currEncoderVal, 4540)); //real robot 4540
+        steps.add(new Hang(currEncoderVal, -4540)); //real robot 4540
         steps.add(new DriveY(.25, -.4));
         steps.add(new DriveX(.25, .4));
         steps.add(new DriveY(.5, .4)); //get off the hook
@@ -37,7 +37,8 @@ public class CraterAuton extends Team7593Opmode {
         steps.add(new GoldDetection()); //detect duh
         steps.add(new DriveY(.58, .6)); //drive forward to see
         steps.add(new GoldStrafe()); //strafe to the side to go to the gold
-        steps.add(new DriveY(1, .75)); //drive forward and knock the right mineral off
+        steps.add(new DriveY(1.5, .75)); //drive forward and knock the right mineral off
+        //steps.add(new Hang(currEncoderVal, -4040));
         return steps;
     }
 }
