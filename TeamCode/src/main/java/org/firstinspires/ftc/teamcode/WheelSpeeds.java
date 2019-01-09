@@ -49,8 +49,8 @@ public class WheelSpeeds {
         }
 
         if(slow){
-            desiredSpeed = desiredSpeed * 0.25;
-            rotationSpeed = rotationSpeed * 0.25;
+            desiredSpeed = desiredSpeed * 0.35;
+            rotationSpeed = rotationSpeed * 0.35;
         }else{
 
         }

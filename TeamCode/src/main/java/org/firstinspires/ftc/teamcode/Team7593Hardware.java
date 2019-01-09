@@ -101,10 +101,10 @@ public class Team7593Hardware {
 
 
         //set motor encoders
-        motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorRearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorRearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         hangMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         tiltMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         extension.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
