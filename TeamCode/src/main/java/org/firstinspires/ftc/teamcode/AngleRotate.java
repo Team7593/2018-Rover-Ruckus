@@ -12,10 +12,7 @@ public class AngleRotate implements AutonStep {
     private float endAngle; //angle the robot should go to
     public boolean enabled;
 
-    double v_lf; //variable that sets the left front wheel power
-    double v_lr; //variable that sets the left rear wheel power
-    double v_rf; //variable that sets the right front wheel power
-    double v_rr; //variable that sets the right rear wheel power
+    WheelSpeeds wheelSpeeds = new WheelSpeeds();
 
     public final double INITIAL_RANGE = 5.0;
 
@@ -46,32 +43,24 @@ public class AngleRotate implements AutonStep {
 
     @Override
     public void start(Team7593Opmode opmode) {
-
+        wheelSpeeds = WheelSpeeds.mecanumDrive(0.0, 0.0, speed, false);
     }
 
     @Override
     public void loop(Team7593Opmode opmode) {
 
-        double direction = 0; //direction we want the wheels to go (in this case kind of unnecessary)
+        opmode.robot.motorFrontLeft.setPower(wheelSpeeds.v_lf);
+        opmode.robot.motorFrontRight.setPower(wheelSpeeds.v_rf);
+        opmode.robot.motorRearLeft.setPower(wheelSpeeds.v_lr);
+        opmode.robot.motorRearRight.setPower(wheelSpeeds.v_rr);
 
-        //use formulas for mecanum wheels
-        v_lf = -(0 * Math.sin(direction + Math.PI/4) + speed);
-        v_rf = (0 * Math.cos(direction + Math.PI/4) - speed);
-        v_lr = -(0 * Math.cos(direction + Math.PI/4) + speed);
-        v_rr = (0 * Math.sin(direction + Math.PI/4) - speed);
-
-        //set motor power
-        opmode.robot.motorFrontLeft.setPower(v_lf);
-        opmode.robot.motorFrontRight.setPower(v_rf);
-        opmode.robot.motorRearLeft.setPower(v_lr);
-        opmode.robot.motorRearRight.setPower(v_rr);
     }
 
     @Override
     public boolean isDone(Team7593Opmode opmode) {
         float currentAngle;
 
-        //condition to normalize the negative angles to be 180-360
+        //condition to normalize the negative angles to be 180-360 so the entire thing will be
         currentAngle = opmode.robot.getCurrentAngle();
         if(currentAngle <= 180) {
             currentAngle += 360;
@@ -119,10 +108,10 @@ public class AngleRotate implements AutonStep {
     @Override
     public void updateTelemetry(Team7593Opmode opmode) {
         //set telemetry
-        opmode.telemetry.addData("Front Left", v_lf);
-        opmode.telemetry.addData("Right Front", v_rf);
-        opmode.telemetry.addData("Left Rear", v_lr);
-        opmode.telemetry.addData("Right Rear", v_rr);
+        opmode.telemetry.addData("Front Left", wheelSpeeds.v_lf);
+        opmode.telemetry.addData("Right Front", wheelSpeeds.v_rf);
+        opmode.telemetry.addData("Left Rear", wheelSpeeds.v_lr);
+        opmode.telemetry.addData("Right Rear", wheelSpeeds.v_rr);
         opmode.telemetry.addData("target angle", endAngle);
         opmode.telemetry.addData("current angle", opmode.robot.getCurrentAngle());
         opmode.telemetry.addData("speed", speed);

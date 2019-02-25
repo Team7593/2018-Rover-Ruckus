@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import java.util.ArrayList;
 
-@Autonomous (name = "crater w/o marker")
+@Autonomous (name = "crater")
 public class CraterAuton extends Team7593Opmode {
 
     int currEncoderVal;
@@ -28,17 +28,23 @@ public class CraterAuton extends Team7593Opmode {
     public ArrayList<AutonStep> createAutonSteps() {
 
         ArrayList<AutonStep> steps = new ArrayList<>();
-        steps.add(new Hang(currEncoderVal, -4540)); //real robot 4540
-        steps.add(new DriveY(.25, -.4));
-        steps.add(new DriveX(.25, .4));
-        steps.add(new DriveY(.5, .4)); //get off the hook
-        steps.add(new AngleRotate(90, -.45)); //angle yourself so the camera sees the minerals
-        steps.add(new DriveY(.35, -.4)); //drive back
+
+        steps.add(new Hang(currEncoderVal, -4700)); //get off the lander
+
+        steps.add(new AngleRotate(270, .4)); //get off hook
+        steps.add(new DriveY(.45, .65));
+        steps.add(new AngleRotate(0, -.4));
+        steps.add(new DriveX(.4, .7)); //and then drive back to get a good view of the minerals
+
         steps.add(new GoldDetection()); //detect duh
-        steps.add(new DriveY(.58, .6)); //drive forward to see
-        steps.add(new GoldStrafe()); //strafe to the side to go to the gold
-        steps.add(new DriveY(1.5, .75)); //drive forward and knock the right mineral off
-        //steps.add(new Hang(currEncoderVal, -4040));
+
+        steps.add(new AngleRotate(275, .4)); //rotate to face the blocks
+        steps.add(new DriveY(.65, .6)); //drive forward to to get past the lander legs
+        steps.add(new DriveX(.2, .75)); //drive to be in the middle
+
+        steps.add(new GoldStrafe()); //strafe to the side to line up with the gold
+        steps.add(new DriveY(1, .95)); //drive forward and knock the right mineral off
+        steps.add(new DriveY(.40, -.95));//drive backward; makes sure we are clear when we turn
         return steps;
     }
 }

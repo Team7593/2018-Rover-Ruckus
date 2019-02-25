@@ -21,8 +21,11 @@ public class Team7593Teleop extends Team7593Opmode {
     public int currEncoderVal;  //encoder values for tilt motor
     public int oldEncoderVal;
 
-    public int cEncoderVal;  //encoder values for tilt motor
+    public int cEncoderVal;  //encoder values for ext motor
     public int oEncoderVal;
+
+    public int goldVal;
+    public int silverVal;
 
     Orientation angles; //to use the imu (mostly for telemetry)
 
@@ -71,7 +74,7 @@ public class Team7593Teleop extends Team7593Opmode {
         cEncoderVal = robot.extension.getCurrentPosition();
 
         double leftX, rightX, leftY, hangStick, tiltStick, tiltPower; //declaration for the game sticks + power
-        boolean slowTilt, spinIn, spinOut, slowDrive; //declaration for the buttons/bumpers
+        boolean slowTilt, spinIn, spinOut, slowDrive, goldExt, silverExt; //declaration for the buttons/bumpers
         WheelSpeeds speeds; //variable to hold speeds
 
         leftX = gamepad1.left_stick_x;
@@ -79,20 +82,18 @@ public class Team7593Teleop extends Team7593Opmode {
         leftY = gamepad1.left_stick_y;
         slowDrive = gamepad1.left_bumper;
 
-        hangStick = gamepad2.right_stick_y;
-        tiltStick = gamepad2.left_stick_y;
+        hangStick = gamepad2.left_stick_y;
+        tiltStick = gamepad2.right_stick_y;
         slowTilt = gamepad2.a;
+        goldExt = gamepad2.y; //2000
+        silverExt = gamepad2.x; //1500
         spinOut = gamepad2.right_bumper;
         spinIn = gamepad2.left_bumper;
         tiltPower = .3;
 
-        //JUST FOR TESTING
-//        if(gamepad2.x){
-//            ArrayList<AutonStep> steps = new ArrayList<>();
-//            steps.add(new GoldDetection());
-//            telemetry.addData("gold step", "added it");
-//            this.newDriverAssist(steps);
-//        }
+        goldVal = 2500 - cEncoderVal;
+        silverVal = 2000 - cEncoderVal;
+
 
         //get the speeds
         if(slowDrive){
@@ -112,18 +113,32 @@ public class Team7593Teleop extends Team7593Opmode {
             tiltPower = tiltPower/3;
         }
 
+        if(goldExt){
+            ArrayList<AutonStep> steps = new ArrayList<>();
+            steps.add(new Extend(cEncoderVal, goldVal));
+            newDriverAssist(steps);
+            oEncoderVal = cEncoderVal;
+        }
+
+        if(silverExt){
+            ArrayList<AutonStep> steps = new ArrayList<>();
+            steps.add(new Extend(cEncoderVal, silverVal));
+            newDriverAssist(steps);
+            oEncoderVal = cEncoderVal;
+        }
+
         //recursive encoder loop to the keep the tilt motor still-ish
         if (tiltStick > 0) {
             if (robot.tiltMotor.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
                 robot.tiltMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
-            robot.tiltMotor.setPower(tiltPower);
+            robot.tiltMotor.setPower(-tiltPower);
             oldEncoderVal = currEncoderVal;
         } else if (tiltStick < 0) {
             if (robot.tiltMotor.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
                 robot.tiltMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
-            robot.tiltMotor.setPower(-tiltPower);
+            robot.tiltMotor.setPower(tiltPower);
             oldEncoderVal = currEncoderVal;
         } else {
             if (robot.tiltMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
@@ -143,26 +158,19 @@ public class Team7593Teleop extends Team7593Opmode {
             robot.spinMotor.setPower(0.0);
         }
 
-        //extension
-
-//        if(gamepad2.dpad_up){
-//            robot.extension.setPower(.5);
-//        }else if(gamepad2.dpad_down){
-//            robot.extension.setPower(-.5);
-//        }
 
         //recursive encoder loop to the keep the extension motor still-ish
         if (gamepad2.dpad_up) {
             if (robot.extension.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
                 robot.extension.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
-            robot.extension.setPower(.5);
+            robot.extension.setPower(.95);
             oEncoderVal = cEncoderVal;
         } else if (gamepad2.dpad_down) {
             if (robot.extension.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
                 robot.extension.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
-            robot.extension.setPower(-.5);
+            robot.extension.setPower(-.95);
             oEncoderVal = cEncoderVal;
         } else {
             if (robot.extension.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
@@ -173,16 +181,6 @@ public class Team7593Teleop extends Team7593Opmode {
         }
 
 
-//        if(gamepad2.dpad_up){
-//            extensionPosition += EXTENSION_SPEED;
-//        }else if(gamepad2.dpad_down){
-//            extensionPosition -= EXTENSION_SPEED;
-//        }
-//
-//        extensionPosition = Range.clip(extensionPosition, robot.EXTENSION_MIN, robot.EXTENSION_MAX);
-        //robot.extension.setPosition(extensionPosition);
-
-
         //use the imu
         angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
@@ -190,6 +188,8 @@ public class Team7593Teleop extends Team7593Opmode {
         /*
         WHOA TELEMETRY
         */
+        telemetry.addLine().addData("slow mode: ", slowDrive);
+
         telemetry.addData("hang encoder val:", robot.hangMotor.getCurrentPosition());
         telemetry.addData("extension encoder val:", robot.extension.getCurrentPosition());
         //telemetry.addData("extension value:", extensionPosition);

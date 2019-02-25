@@ -48,7 +48,6 @@ public class DriveY implements AutonStep {
     }
 
     public void loop(Team7593Opmode opmode) {
-
         //set motor power
         opmode.robot.motorFrontLeft.setPower(wheelSpeeds.v_lf);
         opmode.robot.motorFrontRight.setPower(wheelSpeeds.v_rf);
@@ -72,7 +71,6 @@ public class DriveY implements AutonStep {
         }
 
     }
-
 
     public void updateTelemetry(Team7593Opmode opmode) {
         //set telemetry

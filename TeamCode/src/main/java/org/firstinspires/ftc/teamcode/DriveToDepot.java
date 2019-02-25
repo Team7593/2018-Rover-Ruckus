@@ -14,7 +14,7 @@ public class DriveToDepot extends DriveY {
 
         if((Integer)goldMineral == 2){
             this.endTime = .25;
-        }else if((Integer)goldMineral == 3){
+        }else if((Integer)goldMineral == 1){
             this.endTime = .75;
         }
 
