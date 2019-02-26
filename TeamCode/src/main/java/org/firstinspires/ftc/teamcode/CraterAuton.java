@@ -39,12 +39,23 @@ public class CraterAuton extends Team7593Opmode {
         steps.add(new GoldDetection()); //detect duh
 
         steps.add(new AngleRotate(275, .4)); //rotate to face the blocks
-        steps.add(new DriveY(.65, .6)); //drive forward to to get past the lander legs
+        steps.add(new DriveY(.55, .6)); //drive forward to to get past the lander legs
         steps.add(new DriveX(.2, .75)); //drive to be in the middle
 
         steps.add(new GoldStrafe()); //strafe to the side to line up with the gold
         steps.add(new DriveY(.6, .95)); //drive forward and knock the right mineral off
-        steps.add(new DriveY(.40, -.95));//drive backward; makes sure we are clear when we turn
+        steps.add(new DriveY(.50, -.95));//drive backward; makes sure we are clear when we turn
+
+        steps.add(new DriveX(1.5, .95)); //drive to the wall
+        steps.add(new ToWall()); //drive more if you're further away
+
+        steps.add(new AngleRotate(25, -.7)); //turn to line up with the wall
+        steps.add(new DriveX(.9, -.85)); //ram into the wall
+
+        steps.add(new DriveY(1.35, .85));
+        steps.add(new DropMarker());
+
+        steps.add(new DriveY(2.0, -.95));
         return steps;
     }
 }
