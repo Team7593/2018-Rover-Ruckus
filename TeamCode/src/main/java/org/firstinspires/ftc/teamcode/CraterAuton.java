@@ -56,6 +56,7 @@ public class CraterAuton extends Team7593Opmode {
         steps.add(new DropMarker());
 
         steps.add(new DriveY(2.0, -.95));
+        steps.add(new Tilt(1.5, .75));
         return steps;
     }
 }

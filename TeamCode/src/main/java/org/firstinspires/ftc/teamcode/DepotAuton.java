@@ -58,7 +58,7 @@ public class DepotAuton extends Team7593Opmode {
 
         steps.add(new DriveY(2, -1)); //drive to the crater
 
-        steps.add(new Tilt(.6, .4));
+        steps.add(new Tilt(1.5, .75));
 
         return steps;
     }

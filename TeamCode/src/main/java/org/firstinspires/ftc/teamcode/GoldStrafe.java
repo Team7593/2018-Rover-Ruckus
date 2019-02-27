@@ -16,7 +16,7 @@ public class GoldStrafe extends DriveX {
             this.endTime = .85;
             this.speed = .95;
         }else if((Integer)goldMineral == 3){
-            this.endTime = 1;
+            this.endTime = .85;
             this.speed = -.95;
         }else{
             this.endTime = 0;

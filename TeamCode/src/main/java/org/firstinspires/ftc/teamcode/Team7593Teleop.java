@@ -51,11 +51,6 @@ public class Team7593Teleop extends Team7593Opmode {
         robot.extension.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.extension.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //this declaration is kind of unnecessary but that's fine
-//        robot.hangMotor.setPower(0);
-//        robot.hangMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        robot.hangMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         //get the starting encoder value of tilt (this is so we don't assume the starting econder value is 0)
         oldEncoderVal = robot.tiltMotor.getCurrentPosition();
         oEncoderVal = robot.extension.getCurrentPosition();
@@ -73,8 +68,8 @@ public class Team7593Teleop extends Team7593Opmode {
         currEncoderVal = robot.tiltMotor.getCurrentPosition();
         cEncoderVal = robot.extension.getCurrentPosition();
 
-        double leftX, rightX, leftY, hangStick, tiltStick, tiltPower; //declaration for the game sticks + power
-        boolean slowTilt, spinIn, spinOut, slowDrive, goldExt, silverExt; //declaration for the buttons/bumpers
+        double leftX, rightX, leftY, hangStick, tiltStick, tiltPower, slowTilt; //declaration for the game sticks + power
+        boolean spinIn, spinOut, slowDrive, goldExt, silverExt; //declaration for the buttons/bumpers
         WheelSpeeds speeds; //variable to hold speeds
 
         leftX = gamepad1.left_stick_x;
@@ -84,12 +79,12 @@ public class Team7593Teleop extends Team7593Opmode {
 
         hangStick = gamepad2.left_stick_y;
         tiltStick = gamepad2.right_stick_y;
-        slowTilt = gamepad2.a;
+        slowTilt = gamepad2.right_trigger;
         goldExt = gamepad2.y; //2000
         silverExt = gamepad2.x; //1500
         spinOut = gamepad2.right_bumper;
         spinIn = gamepad2.left_bumper;
-        tiltPower = .3;
+        tiltPower = .6;
 
         goldVal = 2500 - cEncoderVal;
         silverVal = 2000 - cEncoderVal;
@@ -109,8 +104,8 @@ public class Team7593Teleop extends Team7593Opmode {
         robot.hangMotor.setPower(hangStick);
 
         //slow the tilt motor
-        if(slowTilt){
-            tiltPower = tiltPower/3;
+        if(slowTilt > 0){
+            tiltPower = tiltPower/4.5;
         }
 
         if(goldExt){
@@ -151,9 +146,9 @@ public class Team7593Teleop extends Team7593Opmode {
 
         //code to spin the small motor
         if(spinOut){
-            robot.spinMotor.setPower(-.7);
+            robot.spinMotor.setPower(-.75);
         }else if(spinIn){
-            robot.spinMotor.setPower(.7);
+            robot.spinMotor.setPower(.75);
         }else{
             robot.spinMotor.setPower(0.0);
         }
@@ -177,7 +172,7 @@ public class Team7593Teleop extends Team7593Opmode {
                 robot.extension.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
             robot.extension.setTargetPosition(oEncoderVal);
-            robot.extension.setPower(0.1);
+            robot.extension.setPower(0.25);
         }
 
 
