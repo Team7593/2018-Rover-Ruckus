@@ -172,7 +172,7 @@ public class Team7593Teleop extends Team7593Opmode {
                 robot.extension.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
             robot.extension.setTargetPosition(oEncoderVal);
-            robot.extension.setPower(0.25);
+            robot.extension.setPower(0.95);
         }
 
 
